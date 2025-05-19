@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: ISC
+// SPDX-FileCopyrightText: 2025 kurth4cker <kurth4cker@gmail.com>
+
+#ifndef SB_H_INCLUDED
+#define SB_H_INCLUDED
+
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdbool.h>
+
+typedef struct {
+    size_t size, capacity;
+    char *data;
+} Sb;
+bool sb_append_char(Sb *sb, int ch);
+bool sb_append_str(Sb *sb, const char *str);
+bool sb_concat(Sb *dest, const Sb *src);
+char *sb_cstr(const Sb *sb);
+void sb_destroy(Sb *sb);
+
+#endif // SB_H_INCLUDED

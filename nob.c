@@ -5,7 +5,7 @@
 
 #define NOB_EXPERIMENTAL_DELETE_OLD
 #define NOB_IMPLEMENTATION
-#include "nob.h"
+#include "vendor/nob.h"
 
 enum os {
     OS_UNIX,

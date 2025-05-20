@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: ISC
 // SPDX-FileCopyrightText: 2025 kurth4cker <kurth4cker@gmail.com>
 
+/* Release notes:
+    - v0.1.0: Basic functionality.
+*/
+
 #ifndef SB_H_INCLUDED
 #define SB_H_INCLUDED
 

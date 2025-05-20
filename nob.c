@@ -32,6 +32,7 @@ setup_cc_and_cflags(Nob_Cmd *cmd)
 
     if (OS == OS_UNIX) {
         nob_cmd_append(cmd, "-std=c99", "-pedantic");
+        nob_cmd_append(cmd, "-g");
         nob_cmd_append(cmd, "-Wall", "-Wextra", "-Werror");
     } else {
         nob_cmd_append(cmd, "/nologo", "/std:c17");
@@ -50,4 +51,14 @@ int main(int argc, char **argv)
     if (!nob_cmd_run_sync_and_reset(&cmd)) {
         exit(EXIT_FAILURE);
     }
+
+    for (int i = 0; i < argc; i++) {
+        if (strcmp(argv[i], "test") == 0) {
+            nob_cmd_append(&cmd, "./example");
+            if (!nob_cmd_run_sync_and_reset(&cmd)) {
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+
 }

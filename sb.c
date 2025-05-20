@@ -21,20 +21,23 @@ static bool sb__init_if_needed(Sb *sb)
     return true;
 }
 
-static bool sb__grow_if_needed(Sb *sb)
+static bool sb__reserve(Sb *sb, size_t extra_space)
 {
     assert(sb->data != NULL);
     assert(sb->capacity > 0);
-    if (sb->capacity > sb->size) {
-        return true;
+    size_t new_capacity = sb->capacity;
+    while (new_capacity < sb->size + extra_space) {
+        new_capacity *= 2;
     }
-    size_t new_capacity = sb->capacity * 2;
-    char *data = realloc(sb->data, new_capacity * sizeof(*sb->data));
-    if (data == NULL) {
-        return false;
+
+    if (new_capacity > sb->capacity) {
+        char *data = realloc(sb->data, sizeof(*data) * new_capacity);
+        if (data == NULL) {
+            return false;
+        }
+        sb->data = data;
+        sb->capacity = new_capacity;
     }
-    sb->data = data;
-    sb->capacity = new_capacity;
     return true;
 }
 
@@ -48,7 +51,7 @@ void sb_destroy(Sb *sb)
 
 bool sb_append_char(Sb *sb, int ch)
 {
-    if (!sb__init_if_needed(sb) || !sb__grow_if_needed(sb)) {
+    if (!sb__init_if_needed(sb) || !sb__reserve(sb, 1)) {
         return false;
     }
     sb->data[sb->size] = ch;
@@ -64,6 +67,16 @@ bool sb_append_str(Sb *sb, const char *str)
             return false;
         }
     }
+    return true;
+}
+
+bool sb_concat(Sb *sb, const Sb *src)
+{
+    if (!sb__init_if_needed(sb) || !sb__reserve(sb, src->size)) {
+        return false;
+    }
+    memcpy(sb->data + sb->size, src->data, src->size);
+    sb->size += src->size;
     return true;
 }
 

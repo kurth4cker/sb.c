@@ -7,6 +7,8 @@
 
 #include "sb.h"
 
+extern inline void sb_reset(Sb *sb);
+
 static bool sb__init_if_needed(Sb *sb)
 {
     if (sb->data != NULL) {

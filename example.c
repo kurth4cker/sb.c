@@ -18,7 +18,12 @@ int main(void)
         char *str = sb_cstr(&sb);
         assert(strcmp(str, "hello world") == 0);
         free(str);
-        sb_destroy(&sb);
+
+        sb_reset(&sb);
+        assert(sb.size == 0);
+        sb_append_str(&sb, "bye world");
+        str = sb_cstr(&sb);
+        assert(strcmp(str, "bye world") == 0);
     }
     {
         Sb hello = { 0 };

@@ -22,4 +22,9 @@ bool sb_concat(Sb *dest, const Sb *src);
 char *sb_cstr(const Sb *sb);
 void sb_destroy(Sb *sb);
 
+inline void sb_reset(Sb *sb)
+{
+    sb->size = 0;
+}
+
 #endif // SB_H_INCLUDED

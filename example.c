@@ -24,6 +24,8 @@ int main(void)
         sb_append_str(&sb, "bye world");
         str = sb_cstr(&sb);
         assert(strcmp(str, "bye world") == 0);
+        free(str);
+        sb_destroy(&sb);
     }
     {
         Sb hello = { 0 };

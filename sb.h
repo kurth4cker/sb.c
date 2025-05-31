@@ -2,6 +2,11 @@
 // SPDX-FileCopyrightText: 2025 kurth4cker <kurth4cker@gmail.com>
 
 /* Release notes:
+    - v0.2.0:
+        Added functions:
+            - sb_append_null()
+            - sb_reset()
+
     - v0.1.0: Basic functionality.
 */
 

@@ -45,4 +45,14 @@ int main(void)
         sb_destroy(&hello);
         sb_destroy(&world);
     }
+
+    {
+        Sb sb = { 0 };
+        const char *greeting = "hello world";
+        sb_append_str(&sb, greeting);
+        sb_append_null(&sb);
+        assert(strlen(greeting) + 1 == sb.size);
+        assert(strcmp(sb.data, greeting) == 0);
+        sb_destroy(&sb);
+    }
 }

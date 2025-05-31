@@ -7,37 +7,27 @@
 #define NOB_IMPLEMENTATION
 #include "vendor/nob.h"
 
-enum os {
-    OS_UNIX,
-    OS_WINDOWS,
-};
-#if defined(__unix__) || defined(__APPLE__)
-enum os OS = OS_UNIX;
-#elif defined(_WIN32)
-enum os OS = OS_WINDOWS;
-#endif
-
 static void
 setup_cc_and_cflags(Nob_Cmd *cmd)
 {
     const char *cc = getenv("CC");
     if (cc == NULL) {
-        if (OS == OS_UNIX) {
+        #if defined(__unix__) || defined(__APPLE__)
             cc = "cc";
-        } else {
+        #elif defined(_WIN32)
             cc = "cl";
-        }
+        #endif
     }
     nob_cmd_append(cmd, cc);
 
-    if (OS == OS_UNIX) {
+    #if defined(__unix__) || defined(__APPLE__)
         nob_cmd_append(cmd, "-std=c99", "-pedantic");
         nob_cmd_append(cmd, "-g");
         nob_cmd_append(cmd, "-Wall", "-Wextra", "-Werror");
-    } else {
+    #elif defined(_WIN32)
         nob_cmd_append(cmd, "/nologo", "/std:c17");
         nob_cmd_append(cmd, "/W4");
-    }
+    #endif
 }
 
 int main(int argc, char **argv)
@@ -60,5 +50,4 @@ int main(int argc, char **argv)
             }
         }
     }
-
 }

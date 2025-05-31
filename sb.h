@@ -21,10 +21,13 @@ bool sb_append_str(Sb *sb, const char *str);
 bool sb_concat(Sb *dest, const Sb *src);
 char *sb_cstr(const Sb *sb);
 void sb_destroy(Sb *sb);
-
 inline void sb_reset(Sb *sb)
 {
     sb->size = 0;
+}
+inline bool sb_append_null(Sb *sb)
+{
+    return sb_append_char(sb, '\0');
 }
 
 #endif // SB_H_INCLUDED

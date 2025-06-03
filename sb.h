@@ -10,6 +10,8 @@
     - v0.1.0: Basic functionality.
 */
 
+// TODO: add header documentation
+
 #ifndef SB_H_INCLUDED
 #define SB_H_INCLUDED
 

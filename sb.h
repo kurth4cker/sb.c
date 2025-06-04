@@ -25,6 +25,7 @@ typedef struct {
     size_t size, capacity;
     char *data;
 } Sb;
+
 // Append given char.
 bool sb_append_char(Sb *sb, int ch);
 

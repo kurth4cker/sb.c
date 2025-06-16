@@ -34,7 +34,19 @@ int main(int argc, char **argv)
 {
     NOB_GO_REBUILD_URSELF(argc, argv);
 
+    bool test = false;
+    // bool help = false;
+
+    for (int i = 0; i < argc; i++) {
+        if (strcmp(argv[i], "test") == 0) {
+            test = true;
+        } else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "help") == 0) {
+            // help = true;
+        }
+    }
+
     Nob_Cmd cmd = { 0 };
+
     setup_cc_and_cflags(&cmd);
     nob_cc_output(&cmd, "example");
     nob_cc_inputs(&cmd, "sb.c", "example.c");
@@ -42,12 +54,10 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < argc; i++) {
-        if (strcmp(argv[i], "test") == 0) {
-            nob_cmd_append(&cmd, "./example");
-            if (!nob_cmd_run_sync_and_reset(&cmd)) {
-                exit(EXIT_FAILURE);
-            }
+    if (test) {
+        nob_cmd_append(&cmd, "./example");
+        if (!nob_cmd_run_sync_and_reset(&cmd)) {
+            exit(EXIT_FAILURE);
         }
     }
 }

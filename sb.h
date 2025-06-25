@@ -31,14 +31,16 @@ bool sb_append_char(Sb *sb, int ch);
 
 // Append given string. Note that there is no trailing null is appended to Sb.
 bool sb_append_str(Sb *sb, const char *str);
-
-// Concat two Sb's.
 bool sb_concat(Sb *dest, const Sb *src);
 
 // Return a dynamically allocated C string representation of Sb.
 char *sb_cstr(const Sb *sb);
 
 // Free internal data structures. (sb.data)
+//
+//     Sb sb = { 0 };
+//     // ...
+//     sb_destroy(&sb);
 void sb_destroy(Sb *sb);
 
 // Reset size to zero.

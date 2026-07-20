@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: ISC
 // SPDX-FileCopyrightText: 2025 kurth4cker <kurth4cker@gmail.com>
+// SPDX-FileCopyrightText: 2026 kurth4cker <kurth4cker@disroot.org>
 
 #include <stdlib.h>
 #include <assert.h>
@@ -10,7 +11,7 @@
 extern inline void sb_reset(Sb *sb);
 extern inline bool sb_append_null(Sb *sb);
 
-static bool sb__init_if_needed(Sb *sb)
+static bool sb_internal_init_if_needed(Sb *sb)
 {
     if (sb->data != NULL) {
         return true;
@@ -24,7 +25,7 @@ static bool sb__init_if_needed(Sb *sb)
     return true;
 }
 
-static bool sb__reserve(Sb *sb, size_t extra_space)
+static bool sb_internal_reserve(Sb *sb, size_t extra_space)
 {
     assert(sb->data != NULL);
     assert(sb->capacity > 0);
@@ -54,7 +55,7 @@ void sb_destroy(Sb *sb)
 
 bool sb_append_char(Sb *sb, int ch)
 {
-    if (!sb__init_if_needed(sb) || !sb__reserve(sb, 1)) {
+    if (!sb_internal_init_if_needed(sb) || !sb_internal_reserve(sb, 1)) {
         return false;
     }
     sb->data[sb->size] = ch;
@@ -75,7 +76,7 @@ bool sb_append_str(Sb *sb, const char *str)
 
 bool sb_concat(Sb *sb, const Sb *src)
 {
-    if (!sb__init_if_needed(sb) || !sb__reserve(sb, src->size)) {
+    if (!sb_internal_init_if_needed(sb) || !sb_internal_reserve(sb, src->size)) {
         return false;
     }
     memcpy(sb->data + sb->size, src->data, src->size);
